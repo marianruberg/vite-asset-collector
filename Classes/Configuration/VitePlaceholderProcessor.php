@@ -22,9 +22,13 @@ final class VitePlaceholderProcessor implements PlaceholderProcessorInterface
      */
     public const PLACEHOLDER_PATTERN = '^[\'"]?([^(]*?)[\'"]?(?:\s*,\s*[\'"]?([^(]*?)[\'"]?)?$';
 
+    private $viteService;
+
     public function __construct(
-        private readonly ViteService $viteService
-    ) {}
+        ViteService $viteService
+    ) {
+        $this->viteService = $viteService;
+    }
 
     public function canProcess(string $placeholder, array $referenceArray): bool
     {

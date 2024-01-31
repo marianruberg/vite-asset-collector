@@ -120,7 +120,7 @@ const VITE_OUTPUT_PATH = %4$s;
     ): string {
         $configuration = explode(self::TEMPLATE_SEPARATOR, $this->getTemplate($useGlob, $useAutoOrigin), 3);
 
-        $encodedEntrypoints = array_map($this->jsonEncode(...), $entrypoints);
+        $encodedEntrypoints = array_map([$this, 'jsonEncode'], $entrypoints);
         $entrypointCode = implode(",\n  ", $encodedEntrypoints);
 
         $outputPath = ($configurationForExtension) ? 'Resources/Public/Vite/' : 'public/_assets/vite/';

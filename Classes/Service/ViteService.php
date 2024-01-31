@@ -21,12 +21,22 @@ class ViteService
 {
     public const DEFAULT_PORT = 5173;
 
+    private $cache;
+    protected $assetCollector;
+    protected $packageManager;
+    protected $extensionConfiguration;
+
     public function __construct(
-        private readonly FrontendInterface $cache,
-        protected readonly AssetCollector $assetCollector,
-        protected readonly PackageManager $packageManager,
-        protected readonly ExtensionConfiguration $extensionConfiguration
-    ) {}
+        FrontendInterface $cache,
+        AssetCollector $assetCollector,
+        PackageManager $packageManager,
+        ExtensionConfiguration $extensionConfiguration
+    ) {
+        $this->cache = $cache;
+        $this->assetCollector = $assetCollector;
+        $this->packageManager = $packageManager;
+        $this->extensionConfiguration = $extensionConfiguration;
+    }
 
     public function getDefaultManifestFile(): string
     {
@@ -106,7 +116,8 @@ class ViteService
         $outputDir = $this->determineOutputDirFromManifestFile($manifestFile);
         $manifest = $this->parseManifestFile($manifestFile);
 
-        if (!$manifest->get($entry)?->isEntry) {
+        $entryData = $manifest->get($entry);
+        if ($entryData !== null && !$entryData->isEntry) {
             throw new ViteException(sprintf(
                 'Invalid vite entry point "%s" in manifest file "%s".',
                 $entry,

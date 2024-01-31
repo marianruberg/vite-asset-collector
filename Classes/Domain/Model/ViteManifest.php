@@ -61,7 +61,7 @@ final class ViteManifest
         return $manifest;
     }
 
-    public static function fromFile(string $path): static
+    public static function fromFile(string $path): ViteManifest
     {
         $manifestJson = file_get_contents($path);
         if ($manifestJson === false) {
