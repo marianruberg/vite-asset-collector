@@ -74,13 +74,13 @@ class ViteService
         $this->assetCollector->addJavaScript(
             'vite',
             (string)$devServerUri->withPath('@vite/client'),
-            ['type' => 'module', ...$scriptTagAttributes],
+            array_merge(['type' => 'module'], $scriptTagAttributes),
             $assetOptions
         );
         $this->assetCollector->addJavaScript(
             "vite:{$entry}",
             (string)$devServerUri->withPath($entry),
-            ['type' => 'module', ...$scriptTagAttributes],
+            array_merge(['type' => 'module'], $scriptTagAttributes),
             $assetOptions
         );
     }
@@ -129,7 +129,7 @@ class ViteService
         $this->assetCollector->addJavaScript(
             "vite:{$entry}",
             $outputDir . $manifest->get($entry)->file,
-            ['type' => 'module', ...$scriptTagAttributes],
+            array_merge(['type' => 'module'], $scriptTagAttributes),
             $assetOptions
         );
 
